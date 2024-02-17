@@ -49,7 +49,7 @@ bookingRouter.post('/sales/slotAllocation', async(req,res)=>{
     })
 })
 
-//ERR !!
+//ERR !! in viewing physios slot
 // bookingRouter.get('/physio/viewSlots' , async(req,res) =>{
 //     try{
 //         const slots= await User.find().populate('slot')
