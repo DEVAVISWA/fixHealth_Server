@@ -1,6 +1,7 @@
 const express= require('express')
 const cors= require('cors')
 const userRouter = require('./controllers/userController')
+const bookingRouter = require('./controllers/bookingController')
 
 const app= express()
 
@@ -13,5 +14,7 @@ app.get('/' , (req,res)=>{
 
 //I implement Role Based Access sytem (RBAS)
 app.use("/api/user/", userRouter);
+//booking
+app.use("/api/booking/",bookingRouter)
 
 module.exports= app
