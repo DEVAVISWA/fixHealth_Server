@@ -6,6 +6,7 @@ const bookingRouter= require('express').Router()
 
 bookingRouter.post('/physio/createBooking', async (req,res)=>{
     const{email,name,day,filter,slotTime,slotNo} = req.body
+    
     //authorization ??
 
     const user= await User.findOne({email})

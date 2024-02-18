@@ -2,6 +2,7 @@ const express= require('express')
 const cors= require('cors')
 const userRouter = require('./controllers/userController')
 const bookingRouter = require('./controllers/bookingController')
+const slotRouter = require('./controllers/slotController')
 
 const app= express()
 
@@ -16,5 +17,7 @@ app.get('/' , (req,res)=>{
 app.use("/api/user/", userRouter);
 //booking
 app.use("/api/booking/",bookingRouter)
+//slot router
+app.use("/api/slots/", slotRouter)
 
 module.exports= app
