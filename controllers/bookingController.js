@@ -5,7 +5,7 @@ const User = require('../models/user')
 const bookingRouter= require('express').Router()
 
 bookingRouter.post('/physio/createBooking', async (req,res)=>{
-    const{email,name,filter,slotTime,slotNo} = req.body
+    const{email,name,day,filter,slotTime,slotNo} = req.body
     //authorization ??
 
     const user= await User.findOne({email})
@@ -15,6 +15,7 @@ bookingRouter.post('/physio/createBooking', async (req,res)=>{
     const booking= new Slot({
         email:email,
         name:name,
+        day:day,
         filter:filter,
         slotTime:slotTime,
         slotNo:slotNo
@@ -23,6 +24,7 @@ bookingRouter.post('/physio/createBooking', async (req,res)=>{
     res.status(200).json({
         email,
         name,
+        day,
         filter,
         slotTime,
         slotNo
