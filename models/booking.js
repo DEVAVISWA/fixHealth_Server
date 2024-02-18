@@ -1,28 +1,27 @@
 const { default: mongoose } = require("mongoose");
 
 const BookingSchema = new mongoose.Schema({
-email: String, // physio email
-name: String,
-date: {
+  email: String, // physio email
+  name: String,
+  date: {
     type: Date,
-    default: Date.now
-},
-remarks: {
+    default: Date.now,
+  },
+  remarks: {
     type: String,
-    default: ""
-}, // Remarks by sales person
-slot_confirmed: {
+    default: "",
+  }, // Remarks by sales person
+  slot_confirmed: {
     type: Boolean,
-    default: false // sales person confirms the slot.
-},
+    default: false, // sales person confirms the slot.
+  },
 
-slot:{
+  slot: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Slot"
-}
-
+    ref: "Slot",
+  },
 });
 
-const Booking= mongoose.model('Booking', BookingSchema, 'bookings');
+const Booking = mongoose.model("Booking", BookingSchema, "bookings");
 
 module.exports = Booking;

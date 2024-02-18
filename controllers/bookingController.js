@@ -1,5 +1,6 @@
 const { err } = require('../Utils/logger')
 const Booking = require('../models/booking')
+const Slot = require('../models/slot')
 const User = require('../models/user')
 const bookingRouter= require('express').Router()
 
@@ -11,7 +12,7 @@ bookingRouter.post('/physio/createBooking', async (req,res)=>{
     if (!user) {
         return res.status(401).json({ message: 'user does not exist' })
     }
-    const booking= new Booking({
+    const booking= new Slot({
         email:email,
         name:name,
         filter:filter,
@@ -21,7 +22,7 @@ bookingRouter.post('/physio/createBooking', async (req,res)=>{
     await booking.save()
     res.status(200).json({
         email,
-        name:booking.name,
+        name,
         filter,
         slotTime,
         slotNo
