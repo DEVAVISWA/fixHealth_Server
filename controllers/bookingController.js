@@ -2,6 +2,57 @@ const { err } = require("../Utils/logger");
 const Booking = require("../models/booking");
 const bookingRouter = require("express").Router();
 
+//added
+bookingRouter.post("/create_patient_booking", async (req,res)=>{
+  try{
+    const { email, name, date, slot, slotNo } = req.body;
+    console.log(date)
+    const patientBookingCondition = await Booking.aggregate([
+        {
+          $lookup: {
+            from:"users",
+            localField:"email",
+            foreignField:"email",
+            as:"physioUser"
+          }
+        },
+        {
+          $unwind:"$physioUser"
+        },
+        {
+          $match: {
+            $and : [
+            {"slot_confirmed" : {$eq : false}},
+            {"physioUser.user_type" : {$eq : "physio"}},
+            {"date" : {$eq: date}}
+            ]
+          }
+        }
+        ])
+        console.log(!patientBookingCondition)
+        if(patientBookingCondition){
+          return res.status(401).json({message:'no doc available at this time'})
+        }
+        const patientBooking= new Booking({
+          email,
+          name,
+          date,
+          slot,
+          slotNo
+        })
+        await patientBooking.save()
+        res.json({message:'booking confirmed'})
+  } catch (error) {
+    err(error);
+    res
+      .json({
+        message: `unable to create new Booking - ERROR:${error.message}`,
+        error: true,
+      })
+      .status(500);
+  }
+})
+//=========================================================================================================
 bookingRouter.post("/create_Booking", async (req, res) => {
   try {
     const { email, name, date, slot, slotNo } = req.body;

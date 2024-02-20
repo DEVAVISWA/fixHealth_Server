@@ -1,4 +1,5 @@
 const { err } = require("../Utils/logger");
+const Booking = require("../models/booking");
 const Slot = require("../models/slot");
 
 const slotRouter = require("express").Router();
@@ -26,7 +27,31 @@ slotRouter.post("/create_slot", async (req, res) => {
   }
 });
 
-slotRouter.get("/get_slots", async (req, res) => {
+slotRouter.get("/get_slots", async (req, res) => { 
+  //get slots for user type : physio, date: from ui, slot_confirmed: false
+  // Booking.aggregate([
+  //   {
+  //     $lookup: {
+  //       from:"users",
+  //       localField:"email",
+  //       foreignField:"email",
+  //       as:"physioUser"
+  //     }
+  //   },
+  //   {
+  //     $unwind:"$physioUser"
+  //   },
+  //   {
+  //     $match: {
+  //       $and : [
+  //       {"slot_confirmed" : {$eq : false}},
+  //       {"physioUser.user_type" : {$eq : "physio"}},
+  //       {"date" : {$gte: new Date("2024-02-19T00:00:00.000Z")}},
+  //       {"date" : {$lte: new Date("2024-02-19T23:59:59.999Z")}}
+  //       ]
+  //     }
+  //   }
+  //   ])
   try {
     const slots = await Slot.aggregate([
       {
