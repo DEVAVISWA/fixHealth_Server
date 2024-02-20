@@ -74,6 +74,7 @@ bookingRouter.post("/create_Booking", async (req, res) => {
           slot_confirmed: false,
           slotNo,
         });
+        console.log("erver date", date)
         await booking.save();
         res
           .json({
